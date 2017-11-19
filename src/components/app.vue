@@ -38,7 +38,7 @@
       ="time" to="/components/tabs/time" @click="time= true">
 
      <div>
-    <md-datepicker v-model="selectedate" :md-active.sync="time" />
+    <md-datepicker v-model="selectdate" :md-active.sync="time" />
   </div>
 
     </md-tab> 
@@ -48,7 +48,7 @@
         <p>Maiores, dolorum. Beatae, optio tempore fuga odit aperiam velit, consequuntur magni inventore sapiente alias sequi odio qui harum dolorem sunt quasi corporis.</p>
       </md-tab> -->
     </md-tabs>
-     <md-card class="md-primary" v-if="namevalue">
+     <md-card class="md-primary card" v-if="namevalue">
       <md-card-header>
         <md-card-header-text>
              <div class="md-content" v-if="groupvalue">组名  : {{ groupvalue }}</div>
@@ -56,7 +56,7 @@
         </md-card-header-text>
       </md-card-header>
      </md-card>
-      <md-button class="md-dense md-raised md-primary center"  v-if="groupvalue&&namevalue&&selectedate" @click="login">提交信息</md-button>
+      <md-button class="md-dense md-raised md-primary center"  v-if="groupvalue&&namevalue&&selectdate" @click="login">提交信息</md-button>
 </div>
       <article  class="state" v-if="state">
 
@@ -67,25 +67,106 @@
       md-label="Log-in "
       md-description=" Now begin to make a time table for your team.">
       <md-button class="md-primary md-raised" @click="creatchoice">创建任务</md-button>
-      <md-button class="md-primary md-raised">查询任务</md-button>
+      <md-button class="md-primary md-raised " @click="search">查询任务</md-button>
     </md-empty-state>
 
   </div>
 
-    
+     
+      </article>
         <!-- / College Timetable -->
-        <div v-if='table' class='tab'>
-          <table border='0' cellpadding='0' cellspacing='0'>
+        <div  v-if='table' class='tab' :info='addinfo'>
+          <table border='0' cellpadding='0' cellspacing='0' >
             <tr class='days'>
               <th></th>
-              <th>Seg</th>
-              <th>Ter</th>
-              <th>Qua</th>
-              <th>Qui</th>
-              <th>Sex</th>
+              <th>Monday</th>
+              <th>Tuesday</th>
+              <th>Wednesday</th>
+              <th>Thursday</th>
+              <th>Friday</th>
+              <th>Saturday</th>
+              <th>Sunday</th>
+            </tr>
+            
+  <td>
+            <tr class="outtr" >
+              <tr  v-for="(timelimit,index ) in timelimit" :key="index">
+                <td>{{timelimit}}</td>
+              </tr>
+            </tr>
+     </td>
+             
+
+        
+       
+         <td>
+            <tr class="outtr" >
+              <tr v-for="(value,index) in grouptime[0]"  :key="index" @click="add(0,index)" 
+              >
+                <td>{{value}}人</td>
+              </tr>
+            </tr>
+         </td>
+         
+         <td>
+            <tr class="outtr" >
+              <tr v-for="(value,index) in grouptime[1]" @click="add(1,index)"  :key="index">
+                <td>{{value}}</td>
+              </tr>
+            </tr>
+         </td>
+         
+         <td>
+            <tr class="outtr" >
+              <tr v-for="(value,index) in grouptime[2]"  @click="add(2,index)"  :key="index">
+                <td>{{value}}</td>
+              </tr>
+            </tr>
+         </td>
+         
+         <td>
+            <tr class="outtr" >
+              <tr v-for="(value,index) in grouptime[3]" @click="add(3,index)"  :key="index">
+                <td>{{value}}</td>
+              </tr>
+            </tr>
+         </td>
+         
+         <td>
+            <tr class="outtr" >
+              <tr v-for="(value,index) in grouptime[4]" @click="add(4,index)" :key="index">
+                <td>{{value}}</td>
+              </tr>
+            </tr>
+         </td>
+         
+         <td>
+            <tr class="outtr" >
+              <tr v-for="(value,index) in grouptime[5]" @click="add(5,index)"  :key="index">
+                <td>{{value}}</td>
+              </tr>
+            </tr>
+         </td>
+         
+         <td>
+            <tr class="outtr" >
+              <tr v-for="(value,index) in grouptime[6]" @click="add(6,index)" :key="index">
+                <td>{{value}}</td>
+              </tr>
+            </tr>
+         </td>
+            <!-- <tr class='days'>
+              <th></th>
+              <th>Monday</th>
+              <th>Tuesday</th>
+              <th>Wednesday</th>
+              <th>Thursday</th>
+              <th>Friday</th>
+              <th>Saturday</th>
+              <th>Sunday</th>
             </tr>
             <tr>
-              <td class='time'>9.00</td>
+              <td class='time'>12.30</td>
               <td id='c1'class='cs335 blue' data-tooltip='Engenharia de Software &amp; Processamento de Dados'>CS335 [JH1]</td>
               <td id='c2'class='cs426 purple' data-tooltip='Computer Graphics'>CS426 [CS1]</td>
               <td id='c3'></td>
@@ -93,7 +174,7 @@
               <td id='c5'>-</td>
             </tr>
             <tr>
-              <td class='time'>9:15 - 10.00</td>
+              <td class='time'></td>
               <td id='c6'></td>
               <td id='c7' class='cs335 blue lab' data-tooltip='Software Engineering &amp; Software Process'>CS335 [Lab]</td>
               <td id='c8' class='md352 green' data-tooltip='Multimedia Production &amp; Management'>MD352 [Kairos]</td>
@@ -132,7 +213,7 @@
               <td id='c29' class='cs240 orange' data-tooltip='Operating Systems'>CS240 [TH1]</td>
               <td id='c30'>-</td>
             </tr>
-            <!-- <tr>
+            <tr>
               <td class='time'>15.00</td>
               <td></td>
               <td></td>
@@ -158,8 +239,7 @@
             </tr> -->
           </table>
         </div>
-  
-      </article>
+ 
       <!-- <nav>
         <ul id="sortable">
             <li class="list-header">
@@ -218,9 +298,11 @@
       <!-- </ul>
       </nav> -->
       <!-- <aside>aside</aside> -->
+        <md-button class="md-dense md-raised md-primary center" v-if='postbtn' @click="post">post</md-button>
     </div>
    
   </div>
+  
 </template>
 
 <script>
@@ -230,6 +312,7 @@ export default {
   name: 'Sidenav',
   data() {
     return {
+      postbtn:false,
       namevalue:null,
       groupvalue:null,
       selectdate:null,
@@ -241,26 +324,130 @@ export default {
     group:false,
     // active: false,
     table:false,
+    choice:false,      
+    datatooltip:[],   
+    grouptime:[],
+    oldgrouptime:[],
+    timelimit:['12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','17:00','17:30','18:00','18:30','19:00','19:30','20:00','20:30','21:00','21:30',
+    '22:00','22:30','23:00','23:30','00:00','00:30','01:00','01:30','02:00','02:30','03:00','03:30','04:00','04:30','05:00','05:30','06:00','06:30',
+    '07:00','07:30','08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30' ],
+    
+
     };
   },
   components: {},
   computed:{
-   
+   addinfo:function(){
+     
+   }
     
   },
+ 
   methods: {
-    login:function(){
-    //fetch
-    this.choice=false;
-    this.table=true;
-    },
-    creatchoice:function(){
+    search:function(){
       this.choice=true;
-      this.state=false;
-      console.log('choice')
-    }
-
-  }
+      this.state=false; 
+        let data={};
+        data.groupname=this.groupvalue;
+        let myInit = { method: 'Post', 
+                       body: JSON.stringify(data),
+                      };
+     fetch(`http://39.108.79.110:1500/api/gettime/`,myInit)
+         .then(res=>{
+          if(res.ok){
+      
+          }else if(res.status===404){
+            alert('不存在这个group name');
+          }else{
+             alert('服务器发生错误');
+          }
+            })
+         .then(value=>{
+           let i=0;
+             for(date in value){
+               for(hour in date){
+                 this.grouptime[i].push(hour.member_count);
+               }
+               i++;
+             }
+             this.oldgrouptime=this.grouptime;
+         })
+         .catch(error=>{
+           console.log('There has been a problem with your fetch operation:'+ error.message)
+         })
+    },
+      creatchoice:function(){
+      this.choice=true;
+      this.state=false;   
+    },
+    add:function(arr,index){
+        this.grouptime[arr][index]+=1;
+    },
+    post:function(){
+         let data={};
+         let postarr=[];
+        data.username=this.username;
+        data.groupname=this.groupvalue;
+        data.start_date=this.selectdate;
+      for( let i=0;i<7;i++){
+        for(let j=0;j<48;j++){
+         postarr.push(grouptime[i][j]-oldgrouptime[i][j]);
+        }
+      }
+      data.time=postarr;
+   fetch(`http://39.108.79.110:1500/api/givetime/`,myInit)
+         .then(res=>{
+          if(res.ok){
+        console.log('ok');
+          }else{
+             alert('服务器发生错误');
+          }
+            })
+         .then(value=>{
+          alert('提交成功')
+         })
+         .catch(error=>{
+           console.log('There has been a problem with your fetch operation:'+ error.message)
+         })
+      },
+    login:function()
+    {
+       if(this.namevalue===null||this.groupvalue===null||this.selectdate===null){
+        alert('请将信息填完整');
+      }else{
+        this.postbtn=true;
+       this.choice=false;
+       this.table=true;
+        let data={};
+        data.groupname=this.groupvalue;
+        let myInit = { method: 'Post', 
+                       body: JSON.stringify(data),
+                      };
+     fetch(`http://39.108.79.110:1500/api/gettime/`,myInit)
+         .then(res=>{
+          if(res.ok){
+      
+          }else if(res.status===404){
+            alert('不存在这个group name');
+          }else{
+             alert('服务器发生错误');
+          }
+            })
+         .then(value=>{
+           let i=0;
+             for(date in value){
+               for(hour in date){
+                 this.grouptime[i].push(hour.member_count);
+               }
+               i++;
+             }
+         })
+         .catch(error=>{
+           console.log('There has been a problem with your fetch operation:'+ error.message)
+         })
+      }
+    } ,
+}
 };
 </script>
 
@@ -273,11 +460,20 @@ export default {
 
 @import "~vue-material/dist/theme/all"; // Apply the theme
 //  @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400);
+.have{
+  color: green;
+}
+.outtr{
+  float: left;
+}
 .center{
   position: absolute;
   left: 50%;
   top: 15vh;
   transform: translateX(-70%);
+}
+.card{
+  margin:20px;
 }
 .state{
   margin-top: 20%!important;
@@ -301,7 +497,7 @@ export default {
 body{
   background: #fafafa;
   font-family: sans-serif;
-  padding: 10px;
+  // padding: 10px;
 }
 
 
