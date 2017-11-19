@@ -1,11 +1,11 @@
 <template>
     <div id='main' >
 
-      <!-- <div class="first"> -->
+      <div class="first"> 
       <md-toolbar class="md-primary">
       <span class="md-title">有空吗</span>
     </md-toolbar>
-    <!-- </div> -->
+     </div> 
 
 <div class='creat-choice' v-if="choice">
 
@@ -43,11 +43,12 @@
 
     </md-tab> 
 
-      <!-- <md-tab id="tab-favorites" md-label="Favorites" to="/components/tabs/favorites">
-        Favorites tab
-        <p>Maiores, dolorum. Beatae, optio tempore fuga odit aperiam velit, consequuntur magni inventore sapiente alias sequi odio qui harum dolorem sunt quasi corporis.</p>
-      </md-tab> -->
     </md-tabs>
+
+
+
+
+<div >
      <md-card class="md-primary card" v-if="namevalue">
       <md-card-header>
         <md-card-header-text>
@@ -58,10 +59,12 @@
      </md-card>
       <md-button class="md-dense md-raised md-primary center"  v-if="groupvalue&&namevalue&&selectdate" @click="login">提交信息</md-button>
 </div>
+
+</div>
+
+
       <article  class="state" v-if="state">
-
       <div>
-
     <md-empty-state
       md-icon=""
       md-label="Log-in "
@@ -69,13 +72,12 @@
       <md-button class="md-primary md-raised" @click="creatchoice">创建任务</md-button>
       <md-button class="md-primary md-raised " @click="search">查询任务</md-button>
     </md-empty-state>
-
   </div>
+</article>
 
-     
-      </article>
+
         <!-- / College Timetable -->
-        <div  v-if='table' class='tab' :info='addinfo'>
+        <div  v-if='table' class='tab' >
           <table border='0' cellpadding='0' cellspacing='0' >
             <tr class='days'>
               <th></th>
@@ -88,30 +90,27 @@
               <th>Sunday</th>
             </tr>
             
-  <td>
+    <td>
             <tr class="outtr" >
-              <tr  v-for="(timelimit,index ) in timelimit" :key="index">
+              <tr  v-for="(timelimit,index ) in timelimit" :key="index" >
                 <td>{{timelimit}}</td>
               </tr>
             </tr>
      </td>
-             
 
-        
-       
-         <td>
+  <td>
             <tr class="outtr" >
               <tr v-for="(value,index) in grouptime[0]"  :key="index" @click="add(0,index)" 
               >
-                <td>{{value}}人</td>
+                <td :data-tooltip='people[0]'>{{value}}人</td>
               </tr>
             </tr>
-         </td>
+  </td>
          
-         <td>
+    <td>
             <tr class="outtr" >
               <tr v-for="(value,index) in grouptime[1]" @click="add(1,index)"  :key="index">
-                <td>{{value}}</td>
+                <td :data-tooltip='people[1]'>{{value}}</td>
               </tr>
             </tr>
          </td>
@@ -119,7 +118,7 @@
          <td>
             <tr class="outtr" >
               <tr v-for="(value,index) in grouptime[2]"  @click="add(2,index)"  :key="index">
-                <td>{{value}}</td>
+                <td :data-tooltip='people[2]'>{{value}}</td>
               </tr>
             </tr>
          </td>
@@ -127,7 +126,7 @@
          <td>
             <tr class="outtr" >
               <tr v-for="(value,index) in grouptime[3]" @click="add(3,index)"  :key="index">
-                <td>{{value}}</td>
+                <td :data-tooltip='people[3]'>{{value}}</td>
               </tr>
             </tr>
          </td>
@@ -135,7 +134,7 @@
          <td>
             <tr class="outtr" >
               <tr v-for="(value,index) in grouptime[4]" @click="add(4,index)" :key="index">
-                <td>{{value}}</td>
+                <td :data-tooltip='people[4]'>{{value}}</td>
               </tr>
             </tr>
          </td>
@@ -143,7 +142,7 @@
          <td>
             <tr class="outtr" >
               <tr v-for="(value,index) in grouptime[5]" @click="add(5,index)"  :key="index">
-                <td>{{value}}</td>
+                <td :data-tooltip='people[5]'>{{value}}</td>
               </tr>
             </tr>
          </td>
@@ -151,153 +150,14 @@
          <td>
             <tr class="outtr" >
               <tr v-for="(value,index) in grouptime[6]" @click="add(6,index)" :key="index">
-                <td>{{value}}</td>
+                <td :data-tooltip='people[6]'>{{value}}</td>
               </tr>
             </tr>
          </td>
-            <!-- <tr class='days'>
-              <th></th>
-              <th>Monday</th>
-              <th>Tuesday</th>
-              <th>Wednesday</th>
-              <th>Thursday</th>
-              <th>Friday</th>
-              <th>Saturday</th>
-              <th>Sunday</th>
-            </tr>
-            <tr>
-              <td class='time'>12.30</td>
-              <td id='c1'class='cs335 blue' data-tooltip='Engenharia de Software &amp; Processamento de Dados'>CS335 [JH1]</td>
-              <td id='c2'class='cs426 purple' data-tooltip='Computer Graphics'>CS426 [CS1]</td>
-              <td id='c3'></td>
-              <td id='c4'></td>
-              <td id='c5'>-</td>
-            </tr>
-            <tr>
-              <td class='time'></td>
-              <td id='c6'></td>
-              <td id='c7' class='cs335 blue lab' data-tooltip='Software Engineering &amp; Software Process'>CS335 [Lab]</td>
-              <td id='c8' class='md352 green' data-tooltip='Multimedia Production &amp; Management'>MD352 [Kairos]</td>
-              <td id='c9'></td>
-              <td id='c10'>-</td>
-            </tr>
-            <tr>
-              <td class='time'>11.00</td>
-              <td id='c11'></td>
-              <td id='c12' class='cs335 blue lab' data-tooltip='Software Engineering &amp; Software Process'>CS335 [Lab]</td>
-              <td id='c13' class='md352 green' data-tooltip='Multimedia Production &amp; Management'>MD352 [Kairos]</td>
-              <td id='c14' class='cs240 orange' data-tooltip='Operating Systems'>CS240 [CH]</td>
-              <td id='c15'>-</td>
-            </tr>
-            <tr>
-              <td class='time'>12.00</td>
-              <td id='c16'></td>
-              <td id='c17' class='md303 navy' data-tooltip='Media &amp; Globalisation'>MD303 [CS2]</td>
-              <td id='c18' class='md313 red' data-tooltip='Special Topic: Multiculturalism &amp; Nationalism'>MD313 [Iontas]</td>
-              <td id='c19' ></td>
-              <td id='c20' >-</td>
-            </tr>
-            <tr>
-              <td class='time'>13.00</td>
-              <td id='c21'></td>
-              <td id='c22'></td>
-              <td id='c23'></td>
-              <td id='c24'></td>
-              <td id='c25'>-</td>
-            </tr>
-            <tr>
-              <td class='time'>14.00</td>
-              <td id='c26'></td>
-              <td id='c27'></td>
-              <td id='c28' class='cs426 purple' data-tooltip='Computer Graphics'>CS426 [CS2]</td>
-              <td id='c29' class='cs240 orange' data-tooltip='Operating Systems'>CS240 [TH1]</td>
-              <td id='c30'>-</td>
-            </tr>
-            <tr>
-              <td class='time'>15.00</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td class='cs240 orange lab' data-tooltip='Operating Systems'>CS240 [Lab]</td>
-              <td>-</td>
-            </tr>
-            <tr>
-              <td class='time'>16.00</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td class='cs240 orange lab' data-tooltip='Operating Systems'>CS240 [Lab]</td>
-              <td>-</td>
-            </tr>
-            <tr>
-              <td class='time'>17.00</td>
-              <td class='cs335 blue' data-tooltip='Software Engineering &amp; Software Process'>CS335 [TH1]</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>-</td>
-            </tr> -->
           </table>
         </div>
  
-      <!-- <nav>
-        <ul id="sortable">
-            <li class="list-header">
-              <h4>#1 Período</h4>
-            </li>
-            <li class="list-item" >
-              <input id='label-1' type='checkbox' checked/>
-              <label position="c1 c2" d-rec="CC003"for='label-1'>
-                <h2>ENG SOFTWARE </h2>
-                  <span>Turma CS335</span></h2>
-              </label>
-            </li>
-            <li class="list-item" >
-              <input id='label-2' type='checkbox' checked/>
-              <label position="c2" d-rec="CC123" for='label-2'>
-                <h2 data-tooltip='Engenharia de Software' >ENG SOFTWARE </h2>
-                  <span>Turma CS335</span></h2>
-              </label>
-            </li>
-            <li class="list-item" >
-              <input id='label-3' type='checkbox' checked/>
-              <label position="c1 c3 c26 c29" d-rec="MAT254" for='label-3'>
-                <h4>Calculo Diferencial & Integral</h4>
-                <span><b>Turma:</b> Noite</span></h2>
-              </label>
-            </li>
-            <li class="list-item" >
-              <input id='label-5' type='checkbox' checked/>
-              <label position="c26" d-rec="MAT254" for='label-5'>
-                <h4>Calculo Diferencial & Integral</h4>
-                <span><b>Turma:</b> Noite</span></h2>
-              </label>
-            </li> -->
-  <!--
-            <li>
-              <input id='label-3' type='checkbox'/>
-              <label for='label-3'>
-                <h2>Watch Movie <span>Lorem ipsum dolor</span></h2>
-              </label>
-            </li>
-  
-            <li>
-            <input id='label-4' type='checkbox'/>
-             <label for='label-4'>
-                <h2>Date with babe <span>Lorem ipsum dolor</span></h2>
-              </label>
-            </li>
-  
-          <li>
-           <input id='label-5' type='checkbox'/>
-           <label for='label-5'>
-              <h2>Jogging at Ayala<span>Lorem ipsum dolor</span></h2>
-            </label>
-          </li> -->
-  
-      <!-- </ul>
-      </nav> -->
-      <!-- <aside>aside</aside> -->
+    
         <md-button class="md-dense md-raised md-primary center" v-if='postbtn' @click="post">post</md-button>
     </div>
    
@@ -306,148 +166,205 @@
 </template>
 
 <script>
-
 export default {
-  name: 'DialogPrompt',
-  name: 'Sidenav',
+  name: "DialogPrompt",
+  name: "Sidenav",
   data() {
     return {
-      postbtn:false,
-      namevalue:null,
-      groupvalue:null,
-      selectdate:null,
-     state:true,
-     first:true,
-     creat:true,
-     name:true,
-     time:false,
-    group:false,
-    // active: false,
-    table:false,
-    choice:false,      
-    datatooltip:[],   
-    grouptime:[],
-    oldgrouptime:[],
-    timelimit:['12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','17:00','17:30','18:00','18:30','19:00','19:30','20:00','20:30','21:00','21:30',
-    '22:00','22:30','23:00','23:30','00:00','00:30','01:00','01:30','02:00','02:30','03:00','03:30','04:00','04:30','05:00','05:30','06:00','06:30',
-    '07:00','07:30','08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30' ],
-    
-
+      postbtn: false,
+      namevalue: null,
+      groupvalue: null,
+      selectdate: null,
+      state: true,
+      first: true,
+      creat: true,
+      name: true,
+      time: false,
+      group: false,
+      // active: false,
+      table: false,
+      choice: false,
+      datatooltip: [],
+      grouptime: [],
+      oldgrouptime: [],
+      timelimit: [
+        "12:00",
+        "12:30",
+        "13:00",
+        "13:30",
+        "14:00",
+        "14:30",
+        "15:00",
+        "15:30",
+        "16:00",
+        "17:00",
+        "17:30",
+        "18:00",
+        "18:30",
+        "19:00",
+        "19:30",
+        "20:00",
+        "20:30",
+        "21:00",
+        "21:30",
+        "22:00",
+        "22:30",
+        "23:00",
+        "23:30",
+        "00:00",
+        "00:30",
+        "01:00",
+        "01:30",
+        "02:00",
+        "02:30",
+        "03:00",
+        "03:30",
+        "04:00",
+        "04:30",
+        "05:00",
+        "05:30",
+        "06:00",
+        "06:30",
+        "07:00",
+        "07:30",
+        "08:00",
+        "08:30",
+        "09:00",
+        "09:30",
+        "10:00",
+        "10:30",
+        "11:00",
+        "11:30"
+      ],
+      people: [],
     };
   },
   components: {},
-  computed:{
-   addinfo:function(){
-     
-   }
-    
-  },
- 
   methods: {
-    search:function(){
-      this.choice=true;
-      this.state=false; 
-        let data={};
-        data.groupname=this.groupvalue;
-        let myInit = { method: 'Post', 
-                       body: JSON.stringify(data),
-                      };
-     fetch(`http://39.108.79.110:1500/api/gettime/`,myInit)
-         .then(res=>{
-          if(res.ok){
-      
-          }else if(res.status===404){
-            alert('不存在这个group name');
-          }else{
-             alert('服务器发生错误');
+    search: function() {
+      this.choice = true;
+      this.state = false;
+      let data = {};
+      data.groupname = this.groupvalue;
+      let myInit = {
+        method: "Post",
+        body: JSON.stringify(data)
+      };
+      fetch(`http://39.108.79.110:1500/api/gettime/`, myInit)
+        .then(res => {
+          if (res.ok) {
+          } else if (res.status === 404) {
+            alert("不存在这个group name");
+          } else {
+            alert("服务器发生错误");
           }
-            })
-         .then(value=>{
-           let i=0;
-             for(date in value){
-               for(hour in date){
-                 this.grouptime[i].push(hour.member_count);
-               }
-               i++;
-             }
-             this.oldgrouptime=this.grouptime;
-         })
-         .catch(error=>{
-           console.log('There has been a problem with your fetch operation:'+ error.message)
-         })
+        })
+        .then(value => {
+          let i = 0;
+          for (let date in value) {
+            for (let hour in date) {
+              this.grouptime[i].push(hour.member_count);
+            }
+            i++;
+          }
+          this.oldgrouptime = this.grouptime;
+        })
+        .catch(error => {
+          console.log(
+            "There has been a problem with your fetch operation:" +
+              error.message
+          );
+        });
     },
-      creatchoice:function(){
-      this.choice=true;
-      this.state=false;   
+    creatchoice: function() {
+      this.choice = true;
+      this.state = false;
     },
-    add:function(arr,index){
-        this.grouptime[arr][index]+=1;
+    add: function(arr, index) {
+      this.grouptime[arr][index] += 1;
     },
-    post:function(){
-         let data={};
-         let postarr=[];
-        data.username=this.username;
-        data.groupname=this.groupvalue;
-        data.start_date=this.selectdate;
-      for( let i=0;i<7;i++){
-        for(let j=0;j<48;j++){
-         postarr.push(grouptime[i][j]-oldgrouptime[i][j]);
+    post: function() {
+      let data = {};
+      let postarr = [];
+      data.username = this.username;
+      data.groupname = this.groupvalue;
+      data.start_date = this.selectdate;
+      for (let i = 0; i < 7; i++) {
+        for (let j = 0; j < 48; j++) {
+          postarr.push(grouptime[i][j] - oldgrouptime[i][j]);
         }
       }
-      data.time=postarr;
-   fetch(`http://39.108.79.110:1500/api/givetime/`,myInit)
-         .then(res=>{
-          if(res.ok){
-        console.log('ok');
-          }else{
-             alert('服务器发生错误');
+      data.time = postarr;
+      fetch(`http://39.108.79.110:1500/api/givetime/`, myInit)
+        .then(res => {
+          if (res.ok) {
+            console.log("ok");
+          } else {
+            alert("服务器发生错误");
           }
-            })
-         .then(value=>{
-          alert('提交成功')
-         })
-         .catch(error=>{
-           console.log('There has been a problem with your fetch operation:'+ error.message)
-         })
-      },
-    login:function()
-    {
-       if(this.namevalue===null||this.groupvalue===null||this.selectdate===null){
-        alert('请将信息填完整');
-      }else{
-        this.postbtn=true;
-       this.choice=false;
-       this.table=true;
-        let data={};
-        data.groupname=this.groupvalue;
-        let myInit = { method: 'Post', 
-                       body: JSON.stringify(data),
-                      };
-     fetch(`http://39.108.79.110:1500/api/gettime/`,myInit)
-         .then(res=>{
-          if(res.ok){
-      
-          }else if(res.status===404){
-            alert('不存在这个group name');
-          }else{
-             alert('服务器发生错误');
-          }
-            })
-         .then(value=>{
-           let i=0;
-             for(date in value){
-               for(hour in date){
-                 this.grouptime[i].push(hour.member_count);
-               }
-               i++;
-             }
-         })
-         .catch(error=>{
-           console.log('There has been a problem with your fetch operation:'+ error.message)
-         })
+        })
+        .then(value => {
+          alert("提交成功");
+        })
+        .catch(error => {
+          console.log(
+            "There has been a problem with your fetch operation:" +
+              error.message
+          );
+        });
+    },
+    login: function() {
+      if (
+        this.namevalue === null ||
+        this.groupvalue === null ||
+        this.selectdate === null
+      ) {
+        alert("请将信息填完整");
+      } else {
+        this.state=false;
+        this.postbtn = true;
+        this.choice = false;
+        this.table = true;
+        let data = {};
+        data.groupname = this.groupvalue;
+        let myInit = {
+          method: "Post",
+          body: JSON.stringify(data)
+        };
+        fetch(`http://39.108.79.110:1500/api/gettime/`, myInit)
+          .then(res => {
+            if (res.ok) {
+            } else if (res.status === 404) {
+              alert("不存在这个group name");
+            } else {
+              alert("服务器发生错误");
+            }
+          })
+          .then(value => {
+            let i = 0;
+            for (let date in value) {
+              for (let people in date) {
+                this.people[i].push(people.member);
+              }
+              this.people[i].reduce(function(peo, index, collec, acummulate) {
+                acummulate += peo.string();
+                return acummulate;
+              }, "");
+              for (let hour in date) {
+                this.grouptime[i].push(hour.member_count);
+              }
+              i++;
+            }
+          })
+          .catch(error => {
+            console.log(
+              "There has been a problem with your fetch operation:" +
+                error.message
+            );
+          });
       }
-    } ,
-}
+    }
+  }
 };
 </script>
 
@@ -455,53 +372,54 @@ export default {
 /*unrelated styling*/
 @import "~vue-material/dist/theme/engine"; // Import the theme engine
 @include md-register-theme("default", (
-  primary: md-get-palette-color(blue, A200) // The primary color of your application
+  primary: md-get-palette-color(blue, A200) 
 ));
 
 @import "~vue-material/dist/theme/all"; // Apply the theme
 //  @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400);
-.have{
+.have {
   color: green;
 }
-.outtr{
+.outtr {
   float: left;
 }
-.center{
+.center {
   position: absolute;
   left: 50%;
   top: 15vh;
   transform: translateX(-70%);
 }
-.card{
-  margin:20px;
+.card {
+  margin: 20px;
 }
-.state{
-  margin-top: 20%!important;
+.state {
+  margin-top: 20% !important;
 }
 .page-container {
-    min-height: 300px;
-    overflow: hidden;
-    position: relative;
-    border: 1px solid rgba(#000, .12);
-  }
+  min-height: 300px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(#000, 0.12);
+}
 
-   // Demo purposes only
-  .md-drawer {
-    width: 230px;
-    max-width: calc(100vw - 125px);
-  }
+// Demo purposes only
+.md-drawer {
+  width: 230px;
+  max-width: calc(100vw - 125px);
+}
 
-  .md-content {
-    padding: 16px;
-  }
-body{
+.md-content {
+  padding: 16px;
+}
+body {
   background: #fafafa;
   font-family: sans-serif;
   // padding: 10px;
 }
 
-
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   margin: 0;
   padding: 0;
   border: 0;
@@ -512,58 +430,81 @@ body{
 }
 
 #overlay {
-      background-color: rgba(46,204,113,0.94);
-      z-index: 1006;
-      position: absolute;
-      right: 40px;
-      top: 10px;
-      width: 200px;
-      height: inherit;
-      display: none;
-      margin: 0 auto;
-      padding: 10px;
-      color: #efefef;
-      text-align: center;
-      font-weight: 600;
-      font-family: 'Open Sans', Helvetica;
+  background-color: rgba(46, 204, 113, 0.94);
+  z-index: 1006;
+  position: absolute;
+  right: 40px;
+  top: 10px;
+  width: 200px;
+  height: inherit;
+  display: none;
+  margin: 0 auto;
+  padding: 10px;
+  color: #efefef;
+  text-align: center;
+  font-weight: 600;
+  font-family: "Open Sans", Helvetica;
 }
 
-.corVermelha{ background: #da2424 !important;}
-.corVerde{    background: #bdff3b !important;}
+.corVermelha {
+  background: #da2424 !important;
+}
+.corVerde {
+  background: #bdff3b !important;
+}
 
-.blue { background: #3498db; }
+.blue {
+  background: #3498db;
+}
 
-.purple { background: #9b59b6; }
+.purple {
+  background: #9b59b6;
+}
 
-.navy { background: #34495e; }
+.navy {
+  background: #34495e;
+}
 
-.green { background: #2ecc71; }
+.green {
+  background: #2ecc71;
+}
 
-.red { background: #e74c3c; }
+.red {
+  background: #e74c3c;
+}
 
-.orange { background: #f39c12; }
+.orange {
+  background: #f39c12;
+}
 
-.cs335, .cs426, .md303, .md352, .md313, .cs240 {
+.cs335,
+.cs426,
+.md303,
+.md352,
+.md313,
+.cs240 {
   font-weight: 300;
   cursor: pointer;
 }
 
 table {
-  font-family: 'Open Sans', Helvetica;
+  font-family: "Open Sans", Helvetica;
   color: #100f0f;
 }
 table tr:nth-child(2n) {
   background: #eff0f1;
 }
-table tr:nth-child(2n+3) {
+table tr:nth-child(2n + 3) {
   background: #fff;
 }
-table th, table td {
+table th,
+table td {
   padding: 1em;
   width: 10em;
 }
 
-.days, .time {
+.days,
+.time {
   background: #34495e;
   text-transform: uppercase;
   font-size: 0.6em;
@@ -639,62 +580,63 @@ table th, table td {
 }
 
 #main {
-    min-height: 800px;
-    margin: 0px;
-    padding: 0px;
-    display: flex;
-    flex-flow: row;
+  min-height: 800px;
+  margin: 0px;
+  padding: 0px;
+  display: flex;
+  flex-flow: row;
 }
 
 #main > article {
-    margin: 4px;
-    padding: 5px;
-    /*border: 1px solid #cccc33;*/
-    /*border-radius: 7pt;*/
-    /*background: #dddd88;*/
-    flex: 3 1 60%;
-    order: 2;
+  margin: 4px;
+  padding: 5px;
+  /*border: 1px solid #cccc33;*/
+  /*border-radius: 7pt;*/
+  /*background: #dddd88;*/
+  flex: 3 1 60%;
+  order: 2;
 }
 
 #main > nav {
-    margin: 4px;
-    padding: 5px;
-    /*border: 1px solid #8888bb;
+  margin: 4px;
+  padding: 5px;
+  /*border: 1px solid #8888bb;
     border-radius: 7pt;
     background: #ccccff;*/
-    flex: 1 6 20%;
-    order: 1;
+  flex: 1 6 20%;
+  order: 1;
 }
 
 #main > aside {
-    margin: 4px;
-    padding: 5px;
-    border: 1px solid #8888bb;
-    border-radius: 7pt;
-    background: #ccccff;
-    flex: 1 6 20%;
-    order: 3;
+  margin: 4px;
+  padding: 5px;
+  border: 1px solid #8888bb;
+  border-radius: 7pt;
+  background: #ccccff;
+  flex: 1 6 20%;
+  order: 3;
 }
 
-header, footer {
-    display: block;
-    margin: 4px;
-    padding: 4em;
-    min-height: 100px;
-    /*border: 1px solid #eebb55;*/
-    /*border-radius: 7pt;*/
+header,
+footer {
+  display: block;
+  margin: 4px;
+  padding: 4em;
+  min-height: 100px;
+  /*border: 1px solid #eebb55;*/
+  /*border-radius: 7pt;*/
 
-    background-color: #17BEBB;
-    border-bottom: 0.5em solid #2E282A;
-    color: #2E282A;
-    text-align: center;
-    /*margin-bottom: 2em;*/
-    /*padding: 4.5em 2em;*/
+  background-color: #17bebb;
+  border-bottom: 0.5em solid #2e282a;
+  color: #2e282a;
+  text-align: center;
+  /*margin-bottom: 2em;*/
+  /*padding: 4.5em 2em;*/
 }
 .hero {
-  background-color: #17BEBB;
-  border-bottom: 0.5em solid #2E282A;
-  color: #2E282A;
+  background-color: #17bebb;
+  border-bottom: 0.5em solid #2e282a;
+  color: #2e282a;
   text-align: center;
   /*margin-bottom: 2em;*/
   padding: 4.5em 2em;
@@ -704,21 +646,21 @@ header, footer {
   margin-bottom: 0;
 }
 h1 {
-  font-family: 'Roboto Slab';
+  font-family: "Roboto Slab";
   font-size: 100%;
   margin: 0 0 0.25em;
 }
 
 /*List*/
 
-h1{
+h1 {
   color: #fff;
   text-align: center;
   font-size: 40px;
   font-weight: 100;
 }
 
-ul{
+ul {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -734,7 +676,7 @@ ul{
   margin: 0px auto;
 }*/
 
-input[type=checkbox] {
+input[type="checkbox"] {
   /*ocultar checkbox*/
   display: none;
 }
@@ -756,13 +698,12 @@ input[type=checkbox] {
   text-align: center;
 }*/
 
-
-label{
-  background: #34495E;
+label {
+  background: #34495e;
   height: 69px;
   width: 100%;
   display: block;
-  border-bottom: 1px solid #2C3E50;
+  border-bottom: 1px solid #2c3e50;
   color: #fff;
   text-transform: capitalize;
   font-weight: 900;
@@ -777,8 +718,7 @@ label{
   -webkit-box-sizing: border-box;
 }
 
-
-label h2 span{
+label h2 span {
   display: block;
   font-size: 5px;
   text-transform: capitalize;
@@ -786,8 +726,8 @@ label h2 span{
   color: #bdc3c7;
 }
 
-label:before{
-  content:"";
+label:before {
+  content: "";
   width: 19px;
   height: 19px;
   border: 1px solid #416282;
@@ -810,38 +750,35 @@ label:after{
   top: 0;
 }*/
 
-
-#label-1:checked ~ label[for=label-1],
-#label-2:checked ~ label[for=label-2],
-#label-3:checked ~ label[for=label-3],
-#label-4:checked ~ label[for=label-4],
-#label-5:checked ~ label[for=label-5]{
-  background: #2C3E50;
-  border-bottom: 1px solid #34495E;
-  color: #1ABC9C;
+#label-1:checked ~ label[for="label-1"],
+#label-2:checked ~ label[for="label-2"],
+#label-3:checked ~ label[for="label-3"],
+#label-4:checked ~ label[for="label-4"],
+#label-5:checked ~ label[for="label-5"] {
+  background: #2c3e50;
+  border-bottom: 1px solid #34495e;
+  color: #1abc9c;
 }
 
-#label-1:checked ~ label[for=label-1] h2 span,
-#label-2:checked ~ label[for=label-2] h2 span,
-#label-3:checked ~ label[for=label-3] h2 span,
-#label-4:checked ~ label[for=label-4] h2 span,
-#label-5:checked ~ label[for=label-5] h2 span{
-  color: #1ABC9C;
+#label-1:checked ~ label[for="label-1"] h2 span,
+#label-2:checked ~ label[for="label-2"] h2 span,
+#label-3:checked ~ label[for="label-3"] h2 span,
+#label-4:checked ~ label[for="label-4"] h2 span,
+#label-5:checked ~ label[for="label-5"] h2 span {
+  color: #1abc9c;
 }
 
-
-
-#label-1:checked ~ label[for=label-1]:before,
-#label-2:checked ~ label[for=label-2]:before,
-#label-3:checked ~ label[for=label-3]:before,
-#label-4:checked ~ label[for=label-4]:before,
-#label-5:checked ~ label[for=label-5]:before{
+#label-1:checked ~ label[for="label-1"]:before,
+#label-2:checked ~ label[for="label-2"]:before,
+#label-3:checked ~ label[for="label-3"]:before,
+#label-4:checked ~ label[for="label-4"]:before,
+#label-5:checked ~ label[for="label-5"]:before {
   /*background: url("https://designmodo.github.io/Flat-UI/images/todo/done.png") no-repeat center center;*/
   background-color: #f90;
   border: 1px solid #1abc9d;
 }
 
-li:first-child label{
+li:first-child label {
   height: 50px;
   text-transform: uppercase;
   /*font-size: 12px;*/
@@ -850,53 +787,55 @@ li:first-child label{
   padding-bottom: 5%;
 }
 
-
-li:first-child label:before{
+li:first-child label:before {
   top: 40%;
 }
 
-li:first-child label:after{
+li:first-child label:after {
   height: 149px;
 }
 
-li:nth-child(2) label{
+li:nth-child(2) label {
   border-right: 8px solid #feb47f;
 }
 
-li:nth-child(3) label{
+li:nth-child(3) label {
   border-right: 8px solid #3498db;
 }
 
-li:nth-child(4) label{
+li:nth-child(4) label {
   border-right: 8px solid #b985ea;
 }
 
-li:last-child label{
+li:last-child label {
   border-right: 8px solid #43d6b0;
 }
 
-
-.list-header{
-  background: #8BC34A;
+.list-header {
+  background: #8bc34a;
   padding: 5%;
   font-size: 14px;
 }
 
 /* Too narrow to support three columns */
-@media screen and (max-width: 680px){
-    #main, #page {
-        flex-direction: column;
-    }
+@media screen and (max-width: 680px) {
+  #main,
+  #page {
+    flex-direction: column;
+  }
 
-    #main > article, #main > nav, #main > aside {
+  #main > article,
+  #main > nav,
+  #main > aside {
     /* Return them to document order */
-        order: 0;
-    }
+    order: 0;
+  }
 
-    #main > nav, #main > aside, header {
-        min-height: 50px;
-        max-height: 50px;
-    }
+  #main > nav,
+  #main > aside,
+  header {
+    min-height: 50px;
+    max-height: 50px;
+  }
 }
-
 </style>
