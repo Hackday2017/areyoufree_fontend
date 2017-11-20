@@ -2,28 +2,14 @@
     <div id='main' >
 
       <div class="first"> 
-      <md-toolbar class="md-primary">
-      <span class="md-title">有空吗</span>
+      <md-toolbar class="md-primary title"  v-if="title">
+      <span class="md-title ">有空吗</span>
     </md-toolbar>
      </div> 
 
-<div class='creat-choice' v-if="choice">
-
- <md-tabs md-sync-route>
-      <md-tab id="name" md-label="name" to="/components/tabs/name" @click="name = true">
-
-              <md-dialog-prompt
-      :md-active.sync="name"
-      v-model="namevalue"
-      md-title="What's your name?"
-      md-input-maxlength="30"
-      md-input-placeholder="Type your name..."
-      md-confirm-text="Done" />
-
-      </md-tab>
-
-      <md-tab id="tab-group" md-label="group" to="/components/tabs/group" @click="group=true">
-
+<div class="group-choice" v-if="groupchoice">
+   <!-- <md-tabs md-sync-route>
+  <md-tab id="tab-group" md-label="group" to="/components/tabs/group" @click="group=true" >
          <md-dialog-prompt
       :md-active.sync="group"
       v-model="groupvalue"
@@ -31,8 +17,40 @@
       md-input-maxlength="30"
       md-input-placeholder="Type your group-name..."
       md-confirm-text="Done" />
+      </md-tab>
+   </md-tabs> -->
+</div>
+
+<div class='creat-choice' v-if="choice">
+    
+ <md-tabs md-sync-route>
+
+   
+      <md-tab id="group" md-label="group" to="/components/tabs/group" @click="group = true">
+
+              <md-dialog-prompt
+      :md-active.sync="group"
+      v-model="groupvalue"
+      md-title="What's your group name?"
+      md-input-maxlength="30"
+      md-input-placeholder="Type your group name..."
+      md-confirm-text="Done" />
 
       </md-tab>
+
+ <md-tab id="name" md-label="name" to="/components/tabs/name" @click="name=true">
+
+         <md-dialog-prompt
+      :md-active.sync="name"
+      v-model="namevalue"
+      md-title="What's your name?"
+      md-input-maxlength="30"
+      md-input-placeholder="Type your name..."
+      md-confirm-text="Done" />
+
+     </md-tab>
+
+   
 
       <md-tab id="tab-time" md-label
       ="time" to="/components/tabs/time" @click="time= true">
@@ -47,20 +65,20 @@
 
 
 
-
+</div>
 <div >
-     <md-card class="md-primary card" v-if="namevalue">
+     <md-card class="md-primary card" v-if="groupvalue">
       <md-card-header>
         <md-card-header-text>
-             <div class="md-content" v-if="groupvalue">组名  : {{ groupvalue }}</div>
-          <div  class="md-content"v-if="namevalue">名字   :    {{ namevalue }}</div>
+             <div class="md-content" v-if="groupvalue"><strong>组名  : </strong>{{ groupvalue }}</div>
+          <div  class="md-content"v-if="namevalue"><strong>名字   :  </strong>  {{ namevalue }}</div>
         </md-card-header-text>
       </md-card-header>
      </md-card>
-      <md-button class="md-dense md-raised md-primary center"  v-if="groupvalue&&namevalue&&selectdate" @click="login">提交信息</md-button>
+      <md-button class="md-dense md-raised md-primary center"  v-if="groupvalue" @click="login">提交信息</md-button>
 </div>
 
-</div>
+
 
 
       <article  class="state" v-if="state">
@@ -77,88 +95,93 @@
 
 
         <!-- / College Timetable -->
-        <div  v-if='table' class='tab' >
-          <table border='0' cellpadding='0' cellspacing='0' >
-            <tr class='days'>
-              <th></th>
-              <th>Monday</th>
-              <th>Tuesday</th>
-              <th>Wednesday</th>
-              <th>Thursday</th>
-              <th>Friday</th>
-              <th>Saturday</th>
-              <th>Sunday</th>
-            </tr>
-            
-    <td>
-            <tr class="outtr" >
-              <tr  v-for="(timelimit,index ) in timelimit" :key="index" >
-                <td>{{timelimit}}</td>
-              </tr>
-            </tr>
-     </td>
+        <div  v-if='table' class='tab'  >
+            <md-toolbar class="md-primary title" >
+      <span class="md-title ">有空吗</span>
+    </md-toolbar>
+          <md-table border='0' cellpadding='0' cellspacing='0' >
+            <md-table-row class='days'>
+              <md-table-head></md-table-head>
+              <md-table-head>Monday</md-table-head>
+              <md-table-head>Tuesday</md-table-head>
+              <md-table-head>Wednesday</md-table-head>
+              <md-table-head>Thursday</md-table-head>
+              <md-table-head>Friday</md-table-head>
+              <md-table-head>Saturday</md-table-head>
+              <md-table-head>Sunday</md-table-head>
+            </md-table-row>
+        <md-table-row v-for="()">
+          
+        </md-table-row>
+    <!-- <md-table-cell>
+            <md-table-row class="outtr"  >
+              <md-table-row  v-for="(timelimit,index ) in timelimit" :key="index" >
+                <md-table-cell class="lefttime">{{timelimit}}</md-table-cell>
+              </md-table-row>
+            </md-table-row>
+     </md-table-cell>
 
-  <td>
-            <tr class="outtr" >
-              <tr v-for="(value,index) in grouptime[0]"  :key="index" @click="add(0,index)" 
-              >
-                <td :data-tooltip='people[0]'>{{value}}人</td>
-              </tr>
-            </tr>
-  </td>
+  <md-table-cell>
+            <md-table-row class="outtr " >
+              <md-table-row v-for="(value,index) in grouptime[0]"  :key="index"  :class="{have:grouptime[0][index]}" @click="value=value+1"   >
+                <md-table-cell   >{{value}}</md-table-cell>
+              </md-table-row>
+            </md-table-row>
+  </md-table-cell>
          
-    <td>
-            <tr class="outtr" >
-              <tr v-for="(value,index) in grouptime[1]" @click="add(1,index)"  :key="index">
-                <td :data-tooltip='people[1]'>{{value}}</td>
-              </tr>
-            </tr>
-         </td>
+    <md-table-cell >
+            <md-table-row class="outtr" >
+              <md-table-row v-for="(value,index) in grouptime[1]" @click="add(1,index)"  :key="index" :class="{have:grouptime[1][index]}">
+                <md-table-cell :data-tooltip='people[1]' >{{value}}</md-table-cell>
+              </md-table-row>
+            </md-table-row>
+         </md-table-cell>
          
-         <td>
-            <tr class="outtr" >
-              <tr v-for="(value,index) in grouptime[2]"  @click="add(2,index)"  :key="index">
-                <td :data-tooltip='people[2]'>{{value}}</td>
-              </tr>
-            </tr>
-         </td>
+         <md-table-cell  >
+            <md-table-row class="outtr" >
+              <md-table-row v-for="(value,index) in grouptime[2]"  @click="add(2,index)"  :key="index" :class="{have:grouptime[2][index]}">
+                <md-table-cell :data-tooltip='people[2]' >{{value}}</md-table-cell>
+              </md-table-row>
+            </md-table-row>
+         </md-table-cell>
          
-         <td>
-            <tr class="outtr" >
-              <tr v-for="(value,index) in grouptime[3]" @click="add(3,index)"  :key="index">
-                <td :data-tooltip='people[3]'>{{value}}</td>
-              </tr>
-            </tr>
-         </td>
+         <md-table-cell >
+            <md-table-row class="outtr" >
+              <md-table-row v-for="(value,index) in grouptime[3]" @click="add(3,index)"  :key="index" :class="{have:grouptime[3][index]}">
+                <md-table-cell :data-tooltip='people[3]'>{{value}}</md-table-cell>
+              </md-table-row>
+            </md-table-row>
+         </md-table-cell>
          
-         <td>
-            <tr class="outtr" >
-              <tr v-for="(value,index) in grouptime[4]" @click="add(4,index)" :key="index">
-                <td :data-tooltip='people[4]'>{{value}}</td>
-              </tr>
-            </tr>
-         </td>
+         <md-table-cell >
+            <md-table-row class="outtr" >
+              <md-table-row v-for="(value,index) in grouptime[4]" @click="add(4,index)" :key="index" :class="{have:grouptime[4][index]}">
+                <md-table-cell :data-tooltip='people[4]' >{{value}}</md-table-cell>
+              </md-table-row>
+            </md-table-row>
+         </md-table-cell>
          
-         <td>
-            <tr class="outtr" >
-              <tr v-for="(value,index) in grouptime[5]" @click="add(5,index)"  :key="index">
-                <td :data-tooltip='people[5]'>{{value}}</td>
-              </tr>
-            </tr>
-         </td>
+         <md-table-cell  >
+            <md-table-row class="outtr" >
+              <md-table-row v-for="(value,index) in grouptime[5]" @click="add(5,index)"  :key="index" :class="{have:grouptime[5][index]}">
+                <md-table-cell :data-tooltip='people[5]' >{{value}}</md-table-cell>
+              </md-table-row>
+            </md-table-row>
+         </md-table-cell>
          
-         <td>
-            <tr class="outtr" >
-              <tr v-for="(value,index) in grouptime[6]" @click="add(6,index)" :key="index">
-                <td :data-tooltip='people[6]'>{{value}}</td>
-              </tr>
-            </tr>
-         </td>
-          </table>
-        </div>
+         <md-table-cell >
+            <md-table-row class="outtr" >
+              <md-table-row v-for="(value,index) in grouptime[6]" @click="add(6,index)" :key="index" :class="{have:grouptime[6][index]}">
+                <md-table-cell :data-tooltip='people[6] '>{{value}}</md-table-cell>
+              </md-table-row>
+            </md-table-row>
+         </md-table-cell>-->
+          </md-table>
+        </div> 
  
     
-        <md-button class="md-dense md-raised md-primary center" v-if='postbtn' @click="post">post</md-button>
+        <md-button class="md-dense md-raised md-primary bottombtn" v-if='postbtn' @click="post">发送</md-button>
+
     </div>
    
   </div>
@@ -171,6 +194,7 @@ export default {
   name: "Sidenav",
   data() {
     return {
+      title:true,
       postbtn: false,
       namevalue: null,
       groupvalue: null,
@@ -178,15 +202,31 @@ export default {
       state: true,
       first: true,
       creat: true,
-      name: true,
+      name: false,
       time: false,
-      group: false,
-      // active: false,
+      group: true,
       table: false,
       choice: false,
+      groupchoice :false,
       datatooltip: [],
-      grouptime: [],
-      oldgrouptime: [],
+      grouptime: [
+                          [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                          [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                          [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                          [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                          [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                          [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                          [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+                        ],
+      oldgrouptime: [
+                          [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                          [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                          [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                          [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                          [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                          [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                          [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+                        ],
       timelimit: [
         "12:00",
         "12:30",
@@ -236,13 +276,13 @@ export default {
         "11:00",
         "11:30"
       ],
-      people: [],
+      people: [['小红','小名','小方'],['小红','小名','小方'],['小红','小名','小方']],
     };
   },
   components: {},
   methods: {
     search: function() {
-      this.choice = true;
+      this.groupchoice = true;
       this.state = false;
       let data = {};
       data.groupname = this.groupvalue;
@@ -250,38 +290,39 @@ export default {
         method: "Post",
         body: JSON.stringify(data)
       };
-      fetch(`http://39.108.79.110:1500/api/gettime/`, myInit)
-        .then(res => {
-          if (res.ok) {
-          } else if (res.status === 404) {
-            alert("不存在这个group name");
-          } else {
-            alert("服务器发生错误");
-          }
-        })
-        .then(value => {
-          let i = 0;
-          for (let date in value) {
-            for (let hour in date) {
-              this.grouptime[i].push(hour.member_count);
-            }
-            i++;
-          }
-          this.oldgrouptime = this.grouptime;
-        })
-        .catch(error => {
-          console.log(
-            "There has been a problem with your fetch operation:" +
-              error.message
-          );
-        });
+      // fetch(`/api/gettime/`, myInit)
+      //   .then(res => {
+      //     if (res.ok) {
+      //     } else if (res.status === 404) {
+      //       alert("不存在这个group name");
+      //     } else {
+      //       alert("服务器发生错误");
+      //     }
+      //   })
+      //   .then(value => {
+      //     let i = 0;
+      //     for (let date in value) {
+      //       for (let hour in date) {
+      //         this.grouptime[i].push(hour.member_count);
+      //       }
+      //       i++;
+      //     }
+      //     this.oldgrouptime = this.grouptime;
+      //   })
+      //   .catch(error => {
+      //     console.log(
+      //       "There has been a problem with your fetch operation:" +
+      //         error.message
+      //     );
+      //   });
     },
     creatchoice: function() {
       this.choice = true;
       this.state = false;
     },
-    add: function(arr, index) {
-      this.grouptime[arr][index] += 1;
+    addtime: function(arr, index) {
+      // this.grouptime[arr][index] += 1;
+      console.log('this.grouptime:'+this.grouptime)
     },
     post: function() {
       let data = {};
@@ -295,34 +336,37 @@ export default {
         }
       }
       data.time = postarr;
-      fetch(`http://39.108.79.110:1500/api/givetime/`, myInit)
-        .then(res => {
-          if (res.ok) {
-            console.log("ok");
-          } else {
-            alert("服务器发生错误");
-          }
-        })
-        .then(value => {
-          alert("提交成功");
-        })
-        .catch(error => {
-          console.log(
-            "There has been a problem with your fetch operation:" +
-              error.message
-          );
-        });
+      // fetch(`/api/givetime/`, myInit)
+      //   .then(res => {
+      //     if (res.ok) {
+      //       console.log("ok");
+      //     } else {
+      //       alert("服务器发生错误");
+      //     }
+      //   })
+      //   .then(value => {
+      //     alert("提交成功");
+      //   })
+      //   .catch(error => {
+      //     console.log(
+      //       "There has been a problem with your fetch operation:" +
+      //         error.message
+      //     );
+      //   });
     },
     login: function() {
-      if (
-        this.namevalue === null ||
-        this.groupvalue === null ||
-        this.selectdate === null
-      ) {
-        alert("请将信息填完整");
-      } else {
+      // if (
+      //   this.namevalue === null ||
+      //   this.groupvalue === null ||
+      //   this.selectdate === null
+      // ) {
+      //   // alert("请将信息填完整");
+      // } else {
+        this.groupvalue=null;
+        this.namevalue=null;
+        this.title=false;
         this.state=false;
-        this.postbtn = true;
+        // this.postbtn = true;
         this.choice = false;
         this.table = true;
         let data = {};
@@ -331,38 +375,38 @@ export default {
           method: "Post",
           body: JSON.stringify(data)
         };
-        fetch(`http://39.108.79.110:1500/api/gettime/`, myInit)
-          .then(res => {
-            if (res.ok) {
-            } else if (res.status === 404) {
-              alert("不存在这个group name");
-            } else {
-              alert("服务器发生错误");
-            }
-          })
-          .then(value => {
-            let i = 0;
-            for (let date in value) {
-              for (let people in date) {
-                this.people[i].push(people.member);
-              }
-              this.people[i].reduce(function(peo, index, collec, acummulate) {
-                acummulate += peo.string();
-                return acummulate;
-              }, "");
-              for (let hour in date) {
-                this.grouptime[i].push(hour.member_count);
-              }
-              i++;
-            }
-          })
-          .catch(error => {
-            console.log(
-              "There has been a problem with your fetch operation:" +
-                error.message
-            );
-          });
-      }
+        // fetch(`http://39.108.79.110:1500/api/gettime/`, myInit)
+        //   .then(res => {
+        //     if (res.ok) {
+        //     } else if (res.status === 404) {
+        //       alert("不存在这个group name");
+        //     } else {
+        //       alert("服务器发生错误");
+        //     }
+        //   })
+        //   .then(value => {
+        //     let i = 0;
+        //     for (let date in value) {
+        //       for (let people in date) {
+        //         this.people[i].push(people.member);
+        //       }
+        //       this.people[i].reduce(function(peo, index, collec, acummulate) {
+        //         acummulate += peo.string();
+        //         return acummulate;
+        //       }, "");
+        //       for (let hour in date) {
+        //         this.grouptime[i].push(hour.member_count);
+        //       }
+        //       i++;
+        //     }
+        //   })
+        //   .catch(error => {
+        //     console.log(
+        //       "There has been a problem with your fetch operation:" +
+        //         error.message
+        //     );
+        //   });
+      //}
     }
   }
 };
@@ -377,11 +421,21 @@ export default {
 
 @import "~vue-material/dist/theme/all"; // Apply the theme
 //  @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400);
+
+
+.title{
+  width: 376px!important;
+}
 .have {
-  color: green;
+ background-color:rgb(0, 160, 233)!important;
+}
+.lefttime{
+  font-weight: bold;
+  background-color: rgb(244, 165, 121);
 }
 .outtr {
   float: left;
+  clear: both;
 }
 .center {
   position: absolute;
@@ -395,6 +449,7 @@ export default {
 .state {
   margin-top: 20% !important;
 }
+
 .page-container {
   min-height: 300px;
   overflow: hidden;
@@ -462,7 +517,7 @@ body {
 }
 
 .navy {
-  background: #34495e;
+  background: rgb(0, 160, 233)!important;
 }
 
 .green {
@@ -488,8 +543,12 @@ body {
 }
 
 table {
+  border-color: rgb(0, 160, 233)!important;
+  border: solid;
+  margin:  10px;
   font-family: "Open Sans", Helvetica;
   color: #100f0f;
+   background-color: rgb(225, 191, 0);
 }
 table tr:nth-child(2n) {
   background: #eff0f1;
@@ -505,7 +564,7 @@ table td {
 
 .days,
 .time {
-  background: #34495e;
+  background: rgb(0, 160, 233)!important;
   text-transform: uppercase;
   font-size: 0.6em;
   text-align: center;
@@ -520,6 +579,7 @@ table td {
   position: relative;
   z-index: 2;
   cursor: pointer;
+  
 }
 
 /* Hide the tooltip content by default */
@@ -547,7 +607,7 @@ table td {
   -moz-border-radius: 6px;
   -webkit-border-radius: 6px;
   border-radius: 6px;
-  background-color: black;
+  background-color:rgba(0, 160, 233,0.9) ;
   color: #fff;
   content: attr(data-tooltip);
   text-align: center;
